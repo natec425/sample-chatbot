@@ -8097,7 +8097,7 @@ var _user$project$Script$afterReceiving = F2(
 						model,
 						{
 							script: _p9,
-							history: A2(_elm_lang$core$List_ops['::'], message, model.history),
+							history: model.history,
 							chatLog: A2(
 								_elm_lang$core$List_ops['::'],
 								_user$project$Script$Receive(message),
@@ -8112,7 +8112,10 @@ var _user$project$Script$afterReceiving = F2(
 							var _p13 = _p12._0;
 							return A2(
 								_user$project$Script$update,
-								A2(_user$project$Script$Email, _p10._0._2._0, _p13.history),
+								A2(
+									_user$project$Script$Email,
+									_p10._0._2._0,
+									_elm_lang$core$List$reverse(_p13.history)),
 								_p13);
 						}(
 							A2(
@@ -8168,10 +8171,7 @@ var _user$project$Script$afterReceiving = F2(
 			default:
 				return A2(
 					_user$project$Script$update,
-					A2(
-						_user$project$Script$Email,
-						_p8._0,
-						_elm_lang$core$List$reverse(model.history)),
+					A2(_user$project$Script$Email, _p8._0, model.history),
 					model);
 		}
 	});
