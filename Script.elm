@@ -80,7 +80,7 @@ afterReceiving message model =
         Root welcome after ->
             update (Send (welcome ++ optionsMessage after))
                 { model | script = after
-                , history = message :: model.history
+                , history = model.history
                 , chatLog = Receive message :: model.chatLog }
         Node branches ->
             case takenBranch message branches of
@@ -89,7 +89,7 @@ afterReceiving message model =
                             , history = message :: model.history
                             , chatLog = (Receive message) :: model.chatLog }
                     |> update (Send r)
-                    |> (\(m, c) -> update (Email address m.history) m)
+                    |> (\(m, c) -> update (Email address (List.reverse m.history)) m)
                 Just (k, r, s) ->
                     update (Send (r ++ optionsMessage s))
                            {model | script = s
@@ -99,7 +99,7 @@ afterReceiving message model =
                     update (Send  ("I'm sorry, I couldn't understand your response. Please try one of the following options: " ++ optionsMessage model.script))
                             { model | chatLog = (Receive message) :: model.chatLog }
         Leaf address ->
-            update (Email address (List.reverse model.history)) model
+            update (Email address model.history) model
 
 takenBranch : String -> List (Keyword, String, Script) -> Maybe (Keyword, String, Script)
 takenBranch m branches =
